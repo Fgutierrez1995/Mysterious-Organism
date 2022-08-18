@@ -58,12 +58,10 @@ const pAequorFactory = (specNum, specDna) => {
       //specObject.dna has a array of 15 values, 9/15 = 60%
       if (commonDna.length >= 9)
       {
-        console.log(`Specimen #${specObject.specimenNum} will survive`);
         return true;
       }
       else
       {
-        console.log(`Specimen #${specObject.specimenNum} will NOT survive`)
         return false;
       }
       
@@ -95,17 +93,49 @@ const pAequorFactory = (specNum, specDna) => {
 
 };
 
+//With the factory function set up, your team requests that you 
+//create 30 instances of pAequor that can survive in their natural environment. 
+//Store these instances in an array for your team to study later.
+let specimen;
+let survivalSpecimens = [];
+let specimenSurvivalNum = [];
+let nonSurvivalSpecimens = [];
+let nonSpecimenSurvivalNum = [];
+let count = 30;
+for (let i = 1; i <= 1000; i++)
+{
+  //creating specimen object
+  specimen = pAequorFactory(i, survivalSpecimens);
+  //require only 30 instances of pAequor, if count gets to 0 break the for loop.
+  if (count === 0)
+  {
+    break;
+  }
+  //checking if willlikelySurvive is true and if count greater than 0;
+  if (specimen.willLikelySurvive() && count > 0)
+  {
+    //decreasing count by 1
+    count--;
+    //adding DNA Array to survivalSpecimens.
+    survivalSpecimens.push(specimen.dna);
+    //adding corresponding number of the DNA array to specimenSurvivalNum array.
+    specimenSurvivalNum.push(specimen.specimenNum);
+  }
+  else
+  {
+    //adding DNA array that will not survive to nonSurvivalSpecimens array.
+    nonSurvivalSpecimens.push(specimen.dna);
+    //adding corresponding number of the DNA array to nonSpecimenSurvivalNum array.
+    nonSpecimenSurvivalNum.push(specimen.specimenNum);
+  }
+}
 
-//testing functions
-let spec1;
-let spec2;
-let test1 = pAequorFactory(1, spec1);
-let test2 = pAequorFactory(2, spec2);
-
-console.log(`Specimen Number: ${test1.specimenNum}`);
-console.log(`Specimen #1 DNA: ${test1.dna.join('')}`);
-console.log(`Mutated DNA: ${test1.mutate.join('')}`); 
-console.log(`Specimen Number: ${test2.specimenNum}`);
-console.log(`Specimen #2 DNA: ${test2.dna.join('')}`);
-test1.compareDNA(test2);
-console.log(test1.willLikelySurvive());
+//running through both survival and non-survival arrays and printing them out.
+for (let i = 0; i < survivalSpecimens.length; i++)
+{
+  console.log(`Specimen # ${specimenSurvivalNum[i]} and specimen DNA ${survivalSpecimens[i]}`);
+}
+for (let i = 0; i < nonSurvivalSpecimens.length; i++)
+{
+  console.log(`Specimen # ${nonSpecimenSurvivalNum[i]} will not survive and specimen DNA ${nonSurvivalSpecimens[i]}`);
+}
