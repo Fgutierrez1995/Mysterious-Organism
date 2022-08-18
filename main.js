@@ -39,6 +39,34 @@ const pAequorFactory = (specNum, specDna) => {
       //calculating the percentage of common DNA.
       let numOfDNA = (commonDna.length / 15) * 100;
       console.log(`Specimen #1 and Specimen #2 have ${numOfDNA.toFixed(0)}% DNA in common.`)
+    },
+    //.willLikelySurvive() returns true if the object’s .dna array contains 
+    //at least 60% 'C' or 'G' bases. Otherwise, .willLikelySurvive() returns false.
+    willLikelySurvive() {
+      //creating empty array for DNA that equals to C or G.
+      let commonDna = [];
+      for (let i = 0; i < specObject.dna.length; i++)
+      {
+        //checking if the DNA strand is C or G
+        if (specObject.dna[i] === "C" || specObject.dna[i] === "G")
+        {
+          //adding C and G to the commonDna array.
+          commonDna.push(specObject.dna[i]);
+        }
+      }
+      //checking if the length is greater than or equal to 9 which would be 60% or greater.
+      //specObject.dna has a array of 15 values, 9/15 = 60%
+      if (commonDna.length >= 9)
+      {
+        console.log(`Specimen #${specObject.specimenNum} will survive`);
+        return true;
+      }
+      else
+      {
+        console.log(`Specimen #${specObject.specimenNum} will NOT survive`)
+        return false;
+      }
+      
     }
   };
 
@@ -80,3 +108,4 @@ console.log(`Mutated DNA: ${test1.mutate.join('')}`);
 console.log(`Specimen Number: ${test2.specimenNum}`);
 console.log(`Specimen #2 DNA: ${test2.dna.join('')}`);
 test1.compareDNA(test2);
+console.log(test1.willLikelySurvive());
